@@ -11,15 +11,18 @@ def get_msg():
         print(data.decode('utf-8'))
 
 ip = input('IP: ')
-port = int(input('PORT:'))
+port = int(input('PORT: '))
 
-server = ip, port
-alias = input('Alias') #Ввод псевдонима
-soc = socket.socket(socket.AF_INET,socket.SOCK_DGRAM)
+server = ip, port #Настройки сервера
+
+alias = input('Alias: ') #Ввод псевдонима
+
+soc = socket.socket(socket.AF_INET,socket.SOCK_DGRAM) #Настройки подключения
 soc.bind(('', 0)) #Задаем сокет как клиент
 soc.sendto((alias+' Connect to server').encode('utf-8'), server) #Оповещаем всех о подключении
+
 flow = threading.Thread(target=get_msg) #Создаем поток
-flow.start()
+flow.start() #Запуск потока
 
 while 1 :
     message = input()
