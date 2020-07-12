@@ -12,14 +12,17 @@ client = [] #Массив где храним адреса клиентов
 
 print ('Server Is Start')
 
-while 1 :
+while True:
     data, addres = soc.recvfrom(1024)
     print(addres[0], addres[1])
 
-    if addres not in client : 
+    if addres not in client: 
         client.append(addres) #Если такого клиента нету, добавить
-
-    for clients in client :
-        if clients == addres : 
+        for clients in client:
+            if clients == addres:
+                continue
+            soc.sendto(('New Connect').encode('utf-8'), clients)
+    for clients in client:
+        if clients == addres: 
             continue #Не отправлять данные клиенту, который их прислал
         soc.sendto(data, clients)
